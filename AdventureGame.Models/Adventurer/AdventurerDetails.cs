@@ -15,9 +15,12 @@ namespace AdventureGame.Models.Adventurer
         public int Level { get; set; }
         public int Health { get; set; }
         public int Damage { get; set; }
+        public Species Class { get; set; }
 
         //public bool IsInCombat { get; set; }
+        [ForeignKey(nameof(PlanetId))]
         public int PlanetId { get; set; }
     }
+    public enum Species { SpaceWizard, SpaceKnight, GreenAlien, SpaceBarbarian, SpaceArcher, SpaceMonk }
 }
 

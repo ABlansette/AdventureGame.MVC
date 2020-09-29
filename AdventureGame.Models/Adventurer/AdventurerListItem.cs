@@ -13,5 +13,4 @@ namespace AdventureGame.Models.Adventurer
         public int Level { get; set; }
         public Species Class { get; set; }
     }
-    public enum Species { SpaceWizard, SpaceKnight, GreenAlien, SpaceBarbarian, SpaceArcher, SpaceMonk }
 }

@@ -43,5 +43,7 @@ namespace AdventureGame.Data
         [Required]
         [ForeignKey(nameof(PlanetId))]
         public int PlanetId { get; set; }
+
+        public virtual Planet Planet { get; set; }
     }
 }

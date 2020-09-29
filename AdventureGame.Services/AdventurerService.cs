@@ -1,6 +1,6 @@
 ﻿using AdventureGame.Data;
 using AdventureGame.Models.Adventurer;
-using AdventureGame.MVC.Models;
+using AdventureGame.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,10 +13,10 @@ namespace AdventureIsOutThere.Data
 {
     public class AdventurerService
     {
-        private readonly Guid _adventurerId;
-        public AdventurerService(Guid adventurerId)
+        private readonly Guid _userId;
+        public AdventurerService(Guid userId)
         {
-            _adventurerId = adventurerId;
+            _userId = userId;
         }
         public bool CreateAdventurer(AdventurerCreate model)
         {
@@ -43,7 +43,7 @@ namespace AdventureIsOutThere.Data
                 var query =
                     ctx
                         .Adventurers
-                        .Where(e => e.ownerId == _adventurerId)
+                        .Where(e => e.OwnerId == _userId)
                         .Select(
                             e =>
                                 new AdventurerListItem
@@ -51,7 +51,7 @@ namespace AdventureIsOutThere.Data
                                     AdventurerId = e.AdventurerId,
                                     Name = e.Name,
                                     Level = e.Level,
-                                    Class = e.Class
+                                    Class = (AdventureGame.Models.Adventurer.Species)e.Class
                                 }
                         );
 
@@ -65,33 +65,34 @@ namespace AdventureIsOutThere.Data
                 var entity =
                     ctx
                         .Adventurers
-                        .Single(e => e.AdventurerId == id);
-                           return
-                                new AdventurerDetails
-                                {
-                                    AdventurerId = entity.AdventurerId,
-                                    Name = entity.Name,
-                                    Health = entity.Health,
-                                    Damage = entity.Damage,
-                                    Level = entity.Level,
-                                    PlanetId = entity.PlanetId
-                                };
+                        .Single(e => e.AdventurerId == id && e.OwnerId == _userId);
+                return
+                     new AdventurerDetails
+                     {
+                         AdventurerId = entity.AdventurerId,
+                         Name = entity.Name,
+                         Health = entity.Health,
+                         Damage = entity.Damage,
+                         Level = entity.Level,
+                         PlanetId = entity.PlanetId
+                     };
+            }
+        }
+
+        public bool UpdateAdventurer(AdventurerEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Adventurers
+                        .Single(e => e.AdventurerId == model.AdventurerId && e.OwnerId == _userId);
+
+                entity.Name = model.Name;
+
+                return ctx.SaveChanges() == 1;
             }
         }
     }
-
-    public bool UpdateAdventurer(AdventurerEdit model)
-    {
-        using (var ctx = new ApplicationDbContext())
-        {
-            var entity =
-                ctx
-                    .Adventurers
-                    .Single(e => e.AdventurerId == model.AdventurerId);
-
-            entity.Name = model.Name;
-
-            return ctx.SaveChanges() == 1;
-        }
-    }
 }
+

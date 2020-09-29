@@ -10,6 +10,7 @@ namespace AdventureGame.Data
 {
     public class Adventurer
     {
+        public Guid OwnerId { get; set; }
         [Key]
         public int AdventurerId { get; set; }
 
@@ -57,6 +58,7 @@ namespace AdventureGame.Data
 
         [ForeignKey(nameof(PlanetId))]
         public int PlanetId { get; set; }
+        public virtual Planet Planet { get; set; }
     }
 
     public enum Species { SpaceWizard, SpaceKnight, GreenAlien, SpaceBarbarian, SpaceArcher, SpaceMonk }

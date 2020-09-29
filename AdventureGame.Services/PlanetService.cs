@@ -1,6 +1,6 @@
 ﻿using AdventureGame.Data;
 using AdventureGame.Models.Planet;
-using AdventureGame.MVC.Models;
+using AdventureGame.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
