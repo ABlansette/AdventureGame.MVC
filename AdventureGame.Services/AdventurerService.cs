@@ -75,6 +75,7 @@ namespace AdventureIsOutThere.Data
                          Damage = entity.Damage,
                          Level = entity.Level,
                          PlanetId = entity.PlanetId
+                         //Weapon = entity.Weapon()
                      };
             }
         }
@@ -90,6 +91,19 @@ namespace AdventureIsOutThere.Data
 
                 entity.Name = model.Name;
 
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteAdventurer(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Adventurers
+                        .Single(e => e.AdventurerId == id && e.OwnerId == _userId);
+                ctx.Adventurers.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
         }

@@ -13,4 +13,5 @@ namespace AdventureGame.Models.Adventurer
         public int Level { get; set; }
         public Species Class { get; set; }
     }
+    
 }

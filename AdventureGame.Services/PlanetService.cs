@@ -11,8 +11,10 @@ namespace AdventureGame.Services
 {
     public class PlanetService
     {
-        public PlanetService()
+        private Guid _ownerId;
+        public PlanetService(Guid userId)
         {
+            _ownerId = userId;
         }
 
         public bool PlanetCreate(PlanetCreate model)
@@ -23,7 +25,7 @@ namespace AdventureGame.Services
                 var entity =
                     ctx
                         .Planets
-                        .Single(u => u.PlanetId == model.PlanetId);
+                        .Single(u => u.PlanetId == model.PlanetId && _ownerId == u.UserId);
 
 
                 var newPlanet = new Planet()
@@ -71,7 +73,7 @@ namespace AdventureGame.Services
                 var projectEntity =
                     ctx
                         .Planets
-                        .Single(e => e.PlanetId == id);
+                        .Single(e => e.PlanetId == id && _ownerId == e.UserId);
 
                 return new PlanetDetails
                 {
@@ -90,7 +92,7 @@ namespace AdventureGame.Services
                 var entity =
                     ctx
                         .Planets
-                        .Single(e => e.PlanetId == model.PlanetId);
+                        .Single(e => e.PlanetId == model.PlanetId && _ownerId == e.UserId);
                 entity.PlanetaryName = model.PlanetaryName;
                 return ctx.SaveChanges() == 1;
             }
@@ -103,7 +105,7 @@ namespace AdventureGame.Services
                 var entity =
                     ctx
                         .Planets
-                        .Single(e => e.PlanetId == id);
+                        .Single(e => e.PlanetId == id && _ownerId == e.UserId);
                 ctx.Planets.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }

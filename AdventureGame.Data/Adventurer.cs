@@ -22,36 +22,34 @@ namespace AdventureGame.Data
         public int Damage { get; set; }
         public Species Class { get; set; }
 
-        public string Weapon
+        public string Weapon()
         {
-            get
+            if (Class == Species.GreenAlien)
             {
-                if(Class == Species.GreenAlien)
-                {
-                    return "Blaster";
-                }
-                if (Class == Species.SpaceArcher)
-                {
-                    return "Space Bow";
-                }
-                if (Class == Species.SpaceBarbarian)
-                {
-                    return "Space Axe";
-                }
-                if (Class == Species.SpaceKnight)
-                {
-                    return "Space Sword";
-                }
-                if (Class == Species.SpaceMonk)
-                {
-                    return "Space Fists";
-                }
-                if (Class == Species.SpaceWizard)
-                {
-                    return "Space Wand";
-                }
-                return "Space Weapon";
+                return "Blaster";
             }
+            if (Class == Species.SpaceArcher)
+            {
+                return "Space Bow";
+            }
+            if (Class == Species.SpaceBarbarian)
+            {
+                return "Space Axe";
+            }
+            if (Class == Species.SpaceKnight)
+            {
+                return "Space Sword";
+            }
+            if (Class == Species.SpaceMonk)
+            {
+                return "Space Fists";
+            }
+            if (Class == Species.SpaceWizard)
+            {
+                return "Space Wand";
+            }
+            return "Space Weapon";
+
         }
 
         //public bool IsInCombat { get; set; }
